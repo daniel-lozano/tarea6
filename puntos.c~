@@ -1,0 +1,13 @@
+#import <math.h>
+#import <stdlib.h>
+#import <stdio.h>
+
+void main(){
+
+
+  FILE *file;
+
+  file=fopen("datos iniciales","w");
+
+
+}
