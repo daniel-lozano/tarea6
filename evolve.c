@@ -13,14 +13,7 @@
 * evolucion5.txt
 **/
 
-int sacar_columnas(char *datos_iniciales.txt){
-	
-	in = fopen(datos_iniciales.txt, "r");
-	  if(!in){
-		printf("problems opening the file %s\n", datos_iniciales.txt);
-		exit(1);
-  }
-  
+void main(){
 do{
     letra = fgetc(in);
     if(letra=='\n'){
@@ -58,25 +51,6 @@ vy0= malloc(lineas * sizeof(float));
 
 }
 
-//metodo para sacar ro y vo ------------------------------
-
-int radio_velocidad(char *datos_iniciales){
-	
-	int lineas = contar_lineas(datos_iniciales.txt[1]);
-	
-	float *ro;
-	float *vo;
-	ro = malloc(lineas * sizeof(float));
-	vo = malloc(lineas * sizeof(float));
-	
-	
-	for(i=0; i<lineas; i++){
-		ro[i]=sqrt(pow(x0[i],2)+pow(y0[i],2));
-		vo[i]=sqrt(pow(vx0[i],2)+pow(vy0[i],2));
-	}
-	
-	
-}
 /**
  * como se trata de una ecuacion dif. de segundo orden 
  * d^2r/dt^2= -J(1/r^2)
@@ -135,4 +109,35 @@ void evoluciones(){
 	
 	
 	
+}
+
+
+//metodo para sacar Ro y Vo ------------------------------
+
+int radio_velocidad(char *datos_iniciales){
+	
+	int lineas = contar_lineas(datos_iniciales.txt[1]);
+	
+	float *ro;
+	float *vo;
+	ro = malloc(lineas * sizeof(float));
+	vo = malloc(lineas * sizeof(float));
+	
+	
+	for(i=0; i<lineas; i++){
+		ro[i]=sqrt(pow(x0[i],2)+pow(y0[i],2));
+		vo[i]=sqrt(pow(vx0[i],2)+pow(vy0[i],2));
+	}
+	
+	
+}
+
+
+int sacar_columnas(char *datos_iniciales.txt){
+	
+	in = fopen(datos_iniciales.txt, "r");
+	  if(!in){
+		printf("problems opening the file %s\n", datos_iniciales.txt);
+		exit(1);
+  }
 }

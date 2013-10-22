@@ -1,0 +1,2 @@
+float primex1(float x,float y);
+float primex2(float x,float y);
