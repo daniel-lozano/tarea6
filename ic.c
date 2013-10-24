@@ -67,7 +67,7 @@ void main(int argc,char **argv){
 
      if(i>83 && i<=cuerpos-1){//36
        angulo5=teta5*(99-i);
-       fprintf(file,"%d %lf %lf %lf %lf %d\n",i,5*radio*cos(angulo5)+x,5*radio*sin(angulo5)+y,Vpx+velocidad*cos(angulo5)*pow(1/5,1/2),Vpy+velocidad*sin(angulo5)*pow(1/5,1/2));
+       fprintf(file,"%d %lf %lf %lf %lf \n",i,5*radio*cos(angulo5)+x,5*radio*sin(angulo5)+y,Vpx+velocidad*cos(angulo5)*pow(1/5,1/2),Vpy+velocidad*sin(angulo5)*pow(1/5,1/2));
     }  
 
 

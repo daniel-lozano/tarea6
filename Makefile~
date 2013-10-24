@@ -1,0 +1,11 @@
+all : datos_iniciales.ipynb
+
+datos_iniciales.ipynb: datos_iniciales.txt
+
+datos_iniciales.txt: puntos.c
+
+	./a.out 0 0 0 0 
+
+puntos.c: a.out 
+
+	cc punto.c -lm
