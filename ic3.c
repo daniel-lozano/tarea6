@@ -4,21 +4,16 @@
 
 //el siguiente programa calcula las condiciones iniciales para la primera galaxia
 
-void main(int argc,char **argv){
+void main(){
 
-  
-  if(argc<5){
-    printf("Debe dar 4 argumentos correspondientes a:\n la posicion en X inicial\n la posicion en y inicial\n la velocidad en x inicial\n la velocidad en y inicial\n");
-    exit(1);
-}
   FILE *file;
   int i;
   float Vpx,Vpy,x,y;
 
-  x=atof(argv[1]);
-  y=atof(argv[2]);
-  Vpx=atof(argv[3]);
-  Vpy=atof(argv[4]);
+  x=150;
+  y=200;
+  Vpx=-100;
+  Vpy=0;
   //indica el tiempo que ocurre
 
 
@@ -36,8 +31,7 @@ void main(int argc,char **argv){
   float velocidad=pow(masa*G/radio,1/2);
   float angulo1,angulo2,angulo3,angulo4,angulo5;
   printf("variables guardadas\n");
-
-  file=fopen("datos_iniciales.txt","w");
+  file=fopen("datos_iniciales_galaxia2.txt","w");
 
   for(i=-1;i<cuerpos;i++){
     

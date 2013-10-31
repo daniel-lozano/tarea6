@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "runge.h"
 
 //Este es el esqueleto del segundo punto, lee condiciones iniciales, usa Runge Kutta 4 orden
 /**
@@ -14,42 +15,52 @@
 **/
 
 void main(){
-do{
+
+  FILE *in;
+  int lineas=0;
+  String letra;
+
+  in=fopen("datos_iniciales.txt","r");
+  //cuenta las lineas
+
+  do{
     letra = fgetc(in);
     if(letra=='\n'){
       lineas++;
     }
   }while(letra!=EOF);
+  rewind(in);
+ 
   
-  fclose(in);
-  return lineas;
-  
-//creacion de arrays para la posicion y velocidad iniciales
-//x0, y0, vx0, vy0
-//ya sabemos que hay 120 lineas
+  //creacion de arrays para la posicion y velocidad iniciales
+  //x0, y0, vx0, vy0
+  //ya sabemos que hay 120 lineas
 
-float *x0;
-float *y0;
-float *vx0;
-float *vy0;
+  float *x0;
+  float *y0;
+  float *vx0;
+  float *vy0;
+  int *numero;
+  int i,j,k;
 
-int i,j,k;
-//alocacion de memoria para cada array
+  //alocacion de memoria para cada array
 
-x0 = malloc(lineas * sizeof(float));
-y0 = malloc(lineas * sizeof(float));
-vx0 = malloc(lineas * sizeof(float));
-vy0= malloc(lineas * sizeof(float));
+  x0 = malloc(lineas * sizeof(float));
+  y0 = malloc(lineas * sizeof(float));
+  vx0 = malloc(lineas * sizeof(float));
+  vy0= malloc(lineas * sizeof(float));
+  numero= malloc(lineas * sizeof(int));
 
-//escaneando datos y guardando en arrays
-//guardando los datos en las filas correspondientes
+  //escaneando datos y guardando en arrays
+  //guardando los datos en las filas correspondientes
+
   for (k=0; k <lineas; k++){
 	
-    fscanf(in, "%f %f %f %f\n",&(x0[k]),&(y0[k]),&(vx0[k]),&(vy0[k]); 
-  }
-  fclose(in);
-
+    fscanf(in,"%f %f %f %f %f\n",&numero[k],&(x0[k]),&(y0[k]),&(vx0[k]),&(vy0[k])); 
 }
+
+
+
 
 /**
  * como se trata de una ecuacion dif. de segundo orden 
