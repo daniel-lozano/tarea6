@@ -4,7 +4,7 @@
 
 //el siguiente programa calcula las condiciones iniciales para la primera galaxia
 
-void main(int argc,char **argv){
+int main(int argc,char **argv){
 
   
   if(argc<5){
@@ -77,5 +77,5 @@ void main(int argc,char **argv){
 
 
   }
-
+  return 0;
 }

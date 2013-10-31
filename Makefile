@@ -1,17 +1,15 @@
-all :a.out galaxia2
+all : datos_iniciales.txt
 
-a.out: datos_iniciales.txt
+datos_iniciales.txt: galaxia1 
 
-datos_iniciales.txt:ic.c galaxia2
+galaxia1:ic.c
+	cc ic.c -lm -o galaxia1
+	./galaxia1 0 0 0 0
+	mv datos_iniciales.txt datos_1.dat
+	./galaxia1 150 200 -100 0
+	mv datos_iniciales.txt datos_2.dat
+	ipython notebook datos_iniciales_.ipynb &
+clean:
+	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png
 
-	cc ic.c -lm &
-	./a.out 0 0 0 0 
-
-galaxia2:ic2.c
-
-	cc ic2.c -lm &
-	./a.out
-
-grafica: datos_iniciales.ipynb
-	ipython notebook datos_iniciales.ipynb &
 
