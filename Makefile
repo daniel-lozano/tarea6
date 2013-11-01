@@ -10,6 +10,6 @@ galaxia1:ic.c
 	mv datos_iniciales.txt datos_2.dat
 	ipython notebook datos_iniciales_.ipynb &
 clean:
-	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png
+	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png datos_1.dat datos_2.dat
 
 

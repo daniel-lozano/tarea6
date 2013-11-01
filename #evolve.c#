@@ -68,6 +68,7 @@ void main(){
 }
   int a=lineas*4;
   float* soluciones[a];
+  
 
   for(i=0;i<lineas;i++){
     soluciones[4*i]=malloc(sizeof(float)*pasos);
