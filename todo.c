@@ -158,7 +158,7 @@ int main(){
   float *tiempo;
   float X,Y;
   int lineas=0;
-  int pasos=5000;
+  int pasos=1000;
   int dimensiones=3;
   int *numero;
   int i,j,k;
@@ -204,7 +204,15 @@ int main(){
 }
   int a=lineas*4;
   float* soluciones[a];
-
+  
+  printf("resultados\n");
+  
+  /*
+  for(i=0;i<lineas;i++){
+	  printf("%d %f %f %f %f\n",numero[i],(x0[i]),(y0[i]),(vx0[i]),(vy0[i]
+	)); 
+	  }
+**/
   for(i=0;i<lineas;i++){
     soluciones[4*i]=malloc(sizeof(float)*pasos);
     soluciones[4*i+1]=malloc(sizeof(float)*pasos);
@@ -223,6 +231,12 @@ int main(){
   X=x0[0];
   Y=y0[0];
   printf("X=%f, Y=%f\n",X,Y);
+	
+	FILE *evol1;
+	FILE *evol2;
+	FILE *evol3;
+	FILE *evol4;
+	FILE *evol5;
 
   //llenamos el tiempo
   for(i=0;i<pasos;i++){
@@ -230,31 +244,62 @@ int main(){
   }
 
   //ejecutando el metodo rungekutta de 4rto orden
+  for (k=0;k<5;k++){
   
-  for(i=1;i<pasos;i++){
+  //se evoluciona 1000 años los puntos
+  
+	for(i=1;i<pasos;i++){
     //tiempo
 
-    for(j=0;j<lineas;j++){
-      //masas
+		for(j=1;j<lineas;j++){	
+		
+		//masas
 
-      solucion1=runge1(soluciones[4*j],soluciones[4*j+2],tiempo,1,0,i,soluciones[4*j+1][i],X,Y);
-      solucion2=runge1(soluciones[4*j+1],soluciones[4*j+3],tiempo,1,1,i,soluciones[4*j][i],X,Y);
-      //X
-      soluciones[4*j][i]=solucion1[1];
-      //Vx
-      soluciones[4*j+2][i]=solucion1[2];
-      //Y
-      soluciones[4*j+1][i]=solucion2[1];
-      //VY
-      soluciones[4*j+3][i]=solucion2[2];      
-    }
+		solucion1=runge1(soluciones[4*j],soluciones[4*j+2],tiempo,1,0,i,soluciones[4*j+1][i],X,Y);
+		solucion2=runge1(soluciones[4*j+1],soluciones[4*j+3],tiempo,1,1,i,soluciones[4*j][i],X,Y);
+		
+		//X
+		soluciones[4*j][i]=solucion1[1];
+		//Vx
+		soluciones[4*j+2][i]=solucion1[2];
+		//Y
+		soluciones[4*j+1][i]=solucion2[1];
+		//VY
+		soluciones[4*j+3][i]=solucion2[2];    
+		
+		if((i-pasos)==-1){
+		printf("%f %f %f %f\n",soluciones[4*j][-1],soluciones[4*j+1][-1],soluciones[4*j+2][-1],soluciones[4*j+3][-1]);
+			}
+			
+			}
   
+		}
+  for(i=0;i<121;i++){
+	    
+	  if(k==0){
+		  evol1=fopen("1000_anos.dat","w");
+		  fprintf(evol1,"%f %f %f %f\n",soluciones[4*i][-1],soluciones[4*i+1][-1],soluciones[4*i+2][-1],soluciones[4*i+3][-1]);
+		  }
+	  if(k==1){
+		  evol2=fopen("2000_anos.dat","w");
+		  fprintf(evol2,"%f %f %f %f\n",soluciones[4*i][-1],soluciones[4*i+1][-1],soluciones[4*i+2][-1],soluciones[4*i+3][-1]);
+		  }
+      if(k==2){
+		  evol3=fopen("3000_anos.dat","w");
+		  fprintf(evol3,"%f %f %f %f\n",soluciones[4*i][-1],soluciones[4*i+1][-1],soluciones[4*i+2][-1],soluciones[4*i+3][-1]);
+		  }
+      if(k==3){
+		  evol4=fopen("4000_anos.dat","w");
+		  fprintf(evol4,"%f %f %f %f\n",soluciones[4*i][-1],soluciones[4*i+1][-1],soluciones[4*i+2][-1],soluciones[4*i+3][-1]);
+		  }
+	  if(k==4){
+		  evol5=fopen("5000_anos.dat","w");
+		  fprintf(evol5,"%f %f %f %f\n",soluciones[4*i][-1],soluciones[4*i+1][-1],soluciones[4*i+2][-1],soluciones[4*i+3][-1]);
+		  //printf("%f %f %f %f\n",soluciones[4*i][-1],soluciones[4*i+1][-1],soluciones[4*i+2][-1],soluciones[4*i+3][-1]);
+		  }	  
   }
-
-
-  FILE *evo;
-
-
+  
+}
 
   
   return 0;
