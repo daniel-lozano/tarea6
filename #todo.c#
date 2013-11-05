@@ -1,0 +1,263 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "runge.h"
+
+//Este es el esqueleto del segundo punto, lee condiciones iniciales, usa Runge Kutta 4 orden
+/**
+*infile: datos_iniciales.txt
+*outfiles: 
+* evolucion1.txt
+* evolucion2.txt
+* evolucion3.txt
+* evolucion4.txt
+* evolucion5.txt
+**/
+//--------------------------------------------------------------
+float primex1(float x,float xp,float tiempo,float y,float X,float Y){
+  return xp;
+}
+
+float primex2(float x,float xp,float tiempo,float y,float X,float Y){
+  float G=1;
+  float M=1;
+  float a =-G*M*(x-X)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
+  return a;
+}
+
+float primey1(float y,float yp,float tiempo,float x,float X,float Y){
+  return yp;
+}
+
+float primey2(float y,float yp,float tiempo,float x,float X,float Y){
+  float   G=1;
+  float   M=1;
+  float a =-G*M*(y-Y)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
+  return a;
+}
+
+
+
+float* runge1(float *fp1,float *fp2,float *tiempo,float paso, int indice,int i,float dato,float X,float Y){
+
+  // el indice indicara que derivada cogera si  X o Y, y si es el primer o segundo caso
+
+  //X representara el tiempo y Y representara
+
+  float h=paso;
+  float k1,k2,k3,k4;
+  float k11,k21,k31,k41;
+  float kprom1,kprom2;
+  float x1,y1,x2,y2,x3,y3;
+  float y11,y21,y31;
+  float po1,po2,po3;
+  float *solucion;
+
+  solucion=malloc(sizeof(float)*3);
+
+  //Para X en el caso 1
+  if(indice==0){
+
+  //primer paso
+  k1=primex1(fp1[i-1],fp2[i-1],tiempo[i-1],dato,X,Y);
+  k11=primex2(fp1[i-1],fp2[i-1],tiempo[i-1],dato,X,Y);
+
+  x1= tiempo[i-1]+h/2; 
+  y1=fp1[i-1]+k1*h/2;
+  y11=fp2[i-1]+k11*h/2;
+
+  //segundo paso
+  k2=primex1(y1,y11,tiempo[i-1],dato,X,Y);
+  k21=primex2(y1,y11,tiempo[i-1],dato,X,Y);
+
+  x2 = tiempo[i-1] + (h/2.0);
+  y2 = fp1[i-1] + (h/2.0) * k2;
+  y21 = fp2[i-1] + (h/2.0) * k21;
+  
+  //tercer paso      
+  k3 = primex1(y2,y21,tiempo[i-1],dato,X,Y);
+  k31 = primex2(y2,y21,tiempo[i-1],dato,X,Y);  
+  
+  x3 = tiempo[i-1] + h;
+  y3 = fp1[i-1] + h * k3;
+  y31 = fp2[i-1] + h * k31;
+  //promedio 
+  k4 = primex1(y3,y31,tiempo[i-1],dato,X,Y);
+  k4 = primex2(y3,y31,tiempo[i-1],dato,X,Y);
+  
+  //promedio
+  kprom1= (1.0/6.0)*(k1 + 2.0*k2 + 2.0*k3 + k4);
+  kprom2= (1.0/6.0)*(k11 + 2.0*k21 + 2.0*k31 + k41);
+    
+  po1 = tiempo[i-1] + h;
+  po2 = fp1[i-1] + h *kprom1;
+  po3 = fp2[i-1] + h *kprom2;
+
+  solucion[0]=po1;
+  solucion[1]=po2;
+  solucion[2]=po3;
+
+  return solucion;
+}
+    
+ 
+  // para Y caso 1------------------------------------------------------------------------------------
+
+  if(indice==1){
+  //primer paso
+   k1=primey1(fp1[i-1],fp2[i-1],tiempo[i-1],dato,X,Y);
+  k11=primey2(fp1[i-1],fp2[i-1],tiempo[i-1],dato,X,Y);
+
+  x1= tiempo[i-1]+h/2; 
+  y1=fp1[i-1]+k1*h/2;
+  y11=fp2[i-1]+k11*h/2;
+
+  //segundo paso
+  k2=primey1(y1,y11,tiempo[i-1],dato,X,Y);
+  k21=primey2(y1,y11,tiempo[i-1],dato,X,Y);
+
+  x2 = tiempo[i-1] + (h/2.0);
+  y2 = fp1[i-1] + (h/2.0) * k2;
+  y21 = fp2[i-1] + (h/2.0) * k21;
+  
+  //tercer paso      
+  k3 = primey1(y2,y21,tiempo[i-1],dato,X,Y);
+  k31 = primey2(y2,y21,tiempo[i-1],dato,X,Y);  
+  
+  x3 = tiempo[i-1] + h;
+  y3 = fp1[i-1] + h * k3;
+  y31 = fp2[i-1] + h * k31;
+  //promedio 
+  k4 = primey1(y3,y31,tiempo[i-1],dato,X,Y);
+  k4 = primey2(y3,y31,tiempo[i-1],dato,X,Y);
+  
+  kprom1= (1.0/6.0)*(k1 + 2.0*k2 + 2.0*k3 + k4);
+  kprom2= (1.0/6.0)*(k11 + 2.0*k21 + 2.0*k31 + k41);
+    
+  po1 = tiempo[i-1] + h;
+  po2 = fp1[i-1] + h * kprom1;
+  po3 = fp2[i-1] + h * kprom2;
+
+  solucion[0]=po1;
+  solucion[1]=po2;
+  solucion[2]=po3;
+
+  return solucion;
+}
+ 
+}
+
+
+//----------------------------------------------------------------------
+
+int main(){
+
+  FILE *in;
+  char letra;
+  float *x0,*y0,*vx0,*vy0,*solucion1,*solucion2;
+  float *tiempo;
+  float X,Y;
+  int lineas=0;
+  int pasos=5000;
+  int dimensiones=3;
+  int *numero;
+  int i,j,k;
+
+ 
+  in=fopen("datos_1.dat","r");
+  //cuenta las lineas
+
+  do{
+    letra = fgetc(in);
+    if(letra=='\n'){
+      lineas++;
+    }
+  }while(letra!=EOF);
+  rewind(in);
+
+  //se crea un arreglo de soluciones-----------------------------------
+
+  printf("%d lineas del archivo\n",lineas);
+  
+  //creacion de arrays para la posicion y velocidad iniciales
+  //x0, y0, vx0, vy0
+  //ya sabemos que hay 120 lineas
+
+
+  //alocacion de memoria para cada array
+
+  x0 = malloc(lineas * sizeof(float));
+  y0 = malloc(lineas * sizeof(float));
+  vx0 = malloc(lineas * sizeof(float));
+  vy0= malloc(lineas * sizeof(float));
+  numero= malloc(lineas * sizeof(int));
+  tiempo=malloc(sizeof(float)*pasos);
+  solucion1=malloc(sizeof(float)*dimensiones); 
+  solucion2=malloc(sizeof(float)*dimensiones); 
+
+  //escaneando datos y guardando en arrays
+  //guardando los datos en las filas correspondientes
+
+  for (k=0; k <lineas; k++){
+	
+    fscanf(in,"%d %f %f %f %f\n",&numero[k],&(x0[k]),&(y0[k]),&(vx0[k]),&(vy0[k])); 
+}
+  int a=lineas*4;
+  float* soluciones[a];
+
+  for(i=0;i<lineas;i++){
+    soluciones[4*i]=malloc(sizeof(float)*pasos);
+    soluciones[4*i+1]=malloc(sizeof(float)*pasos);
+    soluciones[4*i+2]=malloc(sizeof(float)*pasos);
+    soluciones[4*i+3]=malloc(sizeof(float)*pasos);
+    
+    soluciones[4*i][0]=x0[i];
+    soluciones[4*i+1][0]=y0[i];
+    soluciones[4*i+2][0]=vx0[i];
+    soluciones[4*i+3][0]=vy0[i];
+  }
+
+
+
+  //se imprimen la posicion inicial del centro de la galaxia
+  X=x0[0];
+  Y=y0[0];
+  printf("X=%f, Y=%f\n",X,Y);
+
+  //llenamos el tiempo
+  for(i=0;i<pasos;i++){
+    tiempo[i]=i;
+  }
+
+  //ejecutando el metodo rungekutta de 4rto orden
+  
+  for(i=1;i<pasos;i++){
+    //tiempo
+
+    for(j=1;j<lineas;j++){
+      //masas
+
+      solucion1=runge1(soluciones[4*j],soluciones[4*j+2],tiempo,1,0,i,soluciones[4*j+1][i],X,Y);
+      solucion2=runge1(soluciones[4*j+1],soluciones[4*j+3],tiempo,1,1,i,soluciones[4*j][i],X,Y);
+
+      //X
+      soluciones[4*j][i]=solucion1[1];
+      //Vx
+      soluciones[4*j+2][i]=solucion1[2];
+      //Y
+      soluciones[4*j+1][i]=solucion2[1];
+      //VY
+      soluciones[4*j+3][i]=solucion2[2];      
+    }
+  
+  }
+
+
+  FILE *evo;
+
+
+
+  
+  return 0;
+}
+
