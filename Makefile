@@ -6,7 +6,7 @@ galaxia1:ic.c
 	cc ic.c -lm -o galaxia1
 	./galaxia1 0 0 0 0
 	mv datos_iniciales.txt datos_1.dat
-	./galaxia1 150 200 -100 0
+	./galaxia1 150000 200000 -100000 0
 	mv datos_iniciales.txt datos_2.dat
 	ipython notebook datos_iniciales_.ipynb &
 clean:

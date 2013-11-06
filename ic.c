@@ -30,14 +30,14 @@ int main(int argc,char **argv){
   float teta3=2*pi/24;
   float teta4=2*pi/30;
   float teta5=2*pi/36;
-  float masa=1;
-  float radio=10;
-  float G=1;
+  float masa=pow(10,12);
+  float radio=10000;
+  float G=4.4998665*pow(10,-9);
   float velocidad=pow(masa*G/radio,1/2);
   float angulo1,angulo2,angulo3,angulo4,angulo5;
   printf("variables guardadas\n");
 
-  file=fopen("datos_iniciales.txt","w");
+  file=fopen("datos_iniciales.txt","a");
 
   for(i=-1;i<cuerpos;i++){
     
