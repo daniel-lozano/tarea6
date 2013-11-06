@@ -18,22 +18,22 @@ float primex1(float x,float xp,float tiempo,float y,float X,float Y);
 float primex2(float x,float xp,float tiempo,float y,float X,float Y);
 float primey1(float y,float yp,float tiempo,float x,float X,float Y);
 float primey2(float y,float yp,float tiempo,float x,float X,float Y);
-float* runge1(float fp1,float fp2,float *tiempo,float paso, int indice,int i,float dato,float X,float Y);
+float* runge1(float x,float vx,float y,float vy,float *tiempo,float paso,int i,float X,float Y);
 
 
 int main(){
 
-  FILE *in;
+FILE *in;
   char letra;
-  float *x0,*y0,*vx0,*vy0,*solucion1,*solucion2;
+  float *x0,*y0,*vx0,*vy0,*solucion1;
   float *tiempo;
   float X,Y,Vx,Vy;
   int lineas=0;
   int pasos=100000;
-  int dimensiones=3;
+  int dimensiones=5;
   int *numero;
   int i,j,k,indice;
-  float p=5000000/pasos;
+  float p=5000000/(pasos*5);
 
  
   in=fopen("datos_1.dat","r");
@@ -79,8 +79,9 @@ int main(){
   vy0= malloc(lineas * sizeof(float));
   numero= malloc(lineas * sizeof(int));
   tiempo=malloc(sizeof(float)*pasos);
+
   solucion1=malloc(sizeof(float)*dimensiones); 
-  solucion2=malloc(sizeof(float)*dimensiones); 
+  
 
   FILE *evol1;
   FILE *evol2;
@@ -119,7 +120,6 @@ int main(){
 
   } 
 
-  printf("inicilializando el tiempo  \n");
 
   printf("comienza el rungekutta \n");
 
@@ -131,24 +131,26 @@ int main(){
        for(j=1;j<lineas;j++){	
 		
 	 //masas
-	 indice=0;
-	 solucion1=runge1(x0[j],vx0[j],tiempo,p,indice,j,y0[j],X,Y);
-	 indice=1;
-	 solucion2=runge1(y0[j],vy0[j],tiempo,p,indice,j,x0[j],X,Y);
-
+	
+	 solucion1=runge1(x0[j],vx0[j],y0[j],vy0[j],tiempo,p,i,X,Y);
+	
+	
 	 x0[j]=solucion1[1];
 	 vx0[j]=solucion1[2];
 
-	 y0[j]=solucion2[1];
-	 vy0[j]=solucion2[2];
+	 y0[j]=solucion1[3];
+	 vy0[j]=solucion1[4];
        }
      }
+
+     //-----------------------------------------------------------------
 
      printf("%d \n",k+1);
      for(i=0;i<121;i++){
 	    
        if(k==0){
 	 fprintf(evol1,"%d %f %f %f %f\n",i-1,x0[i],vx0[i],y0[i],vy0[i]);
+
 	
        }
        if(k==1){	 
@@ -171,13 +173,11 @@ int main(){
 
 }
 
-
-
-
+  
 return 0;
 }
 
-//________________FUNCIONES______________________________________________-
+//________________FUNCIONES______________________________________________]________________________________________
 
 
 float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
@@ -185,7 +185,7 @@ float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
 }
 
 float primex2(float x,float vxp,float tiempo,float y,float X,float Y){
-  float G=4.499866*pow(10,-9);
+  float G=4.46391*pow(10,-6);
   float M=pow(10,12);
   float a =-G*M*(x-X)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
@@ -196,7 +196,8 @@ float primey1(float y,float vyp,float tiempo,float x,float X,float Y){
 }
 
 float primey2(float y,float vyp,float tiempo,float x,float X,float Y){
-  float G=4.499866*pow(10,-9);
+  float G=4.46391*pow(10,-6);
+  //=4.499866*pow(10,-9);
   float M=pow(10,12);
   float a =-G*M*(y-Y)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
@@ -204,114 +205,100 @@ float primey2(float y,float vyp,float tiempo,float x,float X,float Y){
 
 
 
-float* runge1(float x,float vx,float *tiempo,float paso, int indice,int i,float dato,float X,float Y){
+float* runge1(float x,float vx,float y,float vy,float *tiempo,float paso,int i,float X,float Y){
 
   // el indice indicara que derivada cogera si  X o Y, y si es el primer o segundo caso
 
   //X representara el tiempo y Y representara
 
   float h=paso;
-  float k1,k2,k3,k4;
-  float k11,k21,k31,k41;
-  float kprom1,kprom2;
-  float x1,y1,x2,y2,x3,y3;
-  float y11,y21,y31;
-  float po1,po2,po3;
+  //k de x
+  float kx1,kx2,kx3,kx4;
+  float lx1,lx2,lx3,lx4;
+  float kpromx,lpromx;
+
+  //k de y
+
+  float ky1,ky2,ky3,ky4;
+  float ly1,ly2,ly3,ly4;
+  float kpromy,lpromy;
+
+  float t1,t2,t3;
+
+  float x1,vx1,x2,vx2,x3,vx3;
+  float y1,vy1,y2,vy2,y3,vy3;
+
+  float po1,po2,po3,po4,po5;
+
   float *solucion;
 
-  solucion=malloc(sizeof(float)*3);
+  solucion=malloc(sizeof(float)*5);
 
-  //Para X en el caso 1
-  if(indice==0){
+  //primer paso X Y
 
-  //primer paso
-  k1=primex1(x,vx,tiempo[i-1],dato,X,Y);
-  k11=primex2(x,vx,tiempo[i-1],dato,X,Y);
+  kx1=primex1(x,vx,tiempo[i-1],y,X,Y);
+  lx1=primex2(x,vx,tiempo[i-1],y,X,Y);
+  ky1=primey1(y,vy,tiempo[i-1],x,X,Y);
+  ly1=primey2(y,vy,tiempo[i-1],x,X,Y);
 
-  x1= tiempo[i-1]+h/2; 
-  y1=x+k1*h/2;
-  y11=vx+k11*h/2;
+  t1 = tiempo[i-1] + (h/2.0);
+  x1=x + (h/2.0)*kx1;
+  y1=y + (h/2.0)*ky1;
+  vx1=vx + (h/2.0)*lx1;
+  vy1=vy + (h/2.0)*ly1;
+ 
+  //segundo paso X Y
+ 
+  kx2=primex1(x1,vx1,t1,y1,X,Y);
+  lx2=primex2(x1,vx1,t1,y1,X,Y);
+  ky2=primey1(y1,vy1,t1,x1,X,Y);
+  ly2=primey2(y1,vy1,t1,x1,X,Y);
 
-  //segundo paso
-  k2=primex1(y1,y11,tiempo[i-1],dato,X,Y);
-  k21=primex2(y1,y11,tiempo[i-1],dato,X,Y);
-
-  x2 = tiempo[i-1] + (h/2.0);
-  y2 = x + (h/2.0) * k2;
-  y21 = vx + (h/2.0) * k21;
+  t2 = tiempo[i-1] + (h/2.0);
+  x2=x + (h/2.0)*kx2;
+  y2=y + (h/2.0)*ky2;
+  vx2=vx + (h/2.0)*lx2;
+  vy2=vy + (h/2.0)*ly2;
   
-  //tercer paso      
-  k3 = primex1(y2,y21,tiempo[i-1],dato,X,Y);
-  k31 = primex2(y2,y21,tiempo[i-1],dato,X,Y);  
+ //tercer paso X Y
+ 
+  kx3=primex1(x2,vx2,t2,y2,X,Y);
+  lx3=primex2(x2,vx2,t2,y2,X,Y);
+  ky3=primey1(y2,vy2,t2,x2,X,Y);
+  ly3=primey2(y2,vy2,t2,x2,X,Y);
+
+  t3 = tiempo[i-1] + h;
+  x3=x + h*kx3;
+  y3=y + h*ky3;
+  vx3=vx + h*lx3;
+  vy3=vy + h*ly3;
+
+  //cuarto paso X Y
+ 
+  kx4=primex1(x3,vx3,t3,y3,X,Y);
+  lx4=primex2(x3,vx3,t3,y3,X,Y);
+  ky4=primey1(y3,vy3,t3,x3,X,Y);
+  ly4=primey2(y3,vy3,t3,x3,X,Y);
+ 
+
+  kpromx = (kx1 + 2.0*kx2 + 2*kx3 + kx4)/6.0;
+  lpromx = (ky1 + 2.0*ky2 + 2*ky3 + ky4)/6.0;
+  kpromy = (lx1 + 2.0*lx2 + 2*lx3 + lx4)/6.0;
+  lpromy = (ly1 + 2.0*ly2 + 2*ly3 + ly4)/6.0;
   
-  x3 = tiempo[i-1] + h;
-  y3 = x + h * k3;
-  y31 = vx + h * k31;
-  //promedio 
-  k4 = primex1(y3,y31,tiempo[i-1],dato,X,Y);
-  k4 = primex2(y3,y31,tiempo[i-1],dato,X,Y);
-  
-  //promedio
-  kprom1= (1.0/6.0)*(k1 + 2.0*k2 + 2.0*k3 + k4);
-  kprom2= (1.0/6.0)*(k11 + 2.0*k21 + 2.0*k31 + k41);
-    
   po1 = tiempo[i-1] + h;
-  po2 = x + h *kprom1;
-  po3 = vx + h *kprom2;
+  po2 = x + h*kpromx;
+  po3 = vx + h*lpromx;
+  po4 = y + h*kpromy;
+  po5 = vy + h*lpromy;
 
   solucion[0]=po1;
   solucion[1]=po2;
   solucion[2]=po3;
-
-  return solucion;
-}
-    
- 
-  // para Y caso 1------------------------------------------------------------------------------------
-
-  if(indice==1){
-  //primer paso
-  k1=primey1(x,vx,tiempo[i-1],dato,X,Y);
-  k11=primey2(x,vx,tiempo[i-1],dato,X,Y);
-
-  x1= tiempo[i-1]+h/2; 
-  y1=x+k1*h/2;
-  y11=vx+k11*h/2;
-
-  //segundo paso
-  k2=primey1(y1,y11,tiempo[i-1],dato,X,Y);
-  k21=primey2(y1,y11,tiempo[i-1],dato,X,Y);
-
-  x2 = tiempo[i-1] + (h/2.0);
-  y2 = x + (h/2.0) * k2;
-  y21 = vx + (h/2.0) * k21;
-  
-  //tercer paso      
-  k3 = primey1(y2,y21,tiempo[i-1],dato,X,Y);
-  k31 = primey2(y2,y21,tiempo[i-1],dato,X,Y);  
-  
-  x3 = tiempo[i-1] + h;
-  y3 = x + h * k3;
-  y31 = vx + h * k31;
-  //promedio 
-  k4 = primey1(y3,y31,tiempo[i-1],dato,X,Y);
-  k4 = primey2(y3,y31,tiempo[i-1],dato,X,Y);
-  
-  kprom1= (1.0/6.0)*(k1 + 2.0*k2 + 2.0*k3 + k4);
-  kprom2= (1.0/6.0)*(k11 + 2.0*k21 + 2.0*k31 + k41);
-    
-  po1 = tiempo[i-1] + h;
-  po2 = x + h * kprom1;
-  po3 = vx + h * kprom2;
-
-  solucion[0]=po1;
-  solucion[1]=po2;
-  solucion[2]=po3;
-
-  return solucion;
-}
- 
+  solucion[3]=po4;
+  solucion[4]=po5;
+  return solucion; 
 }
 
 
-//----------------------------------------------------------------------
+

@@ -18,6 +18,6 @@ galaxia1:ic.c
 
 	./colision
 clean:
-	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png *.dat evolucion
+	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png *.dat evolucion colision
 
 
