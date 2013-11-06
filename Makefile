@@ -8,11 +8,15 @@ galaxia1:ic.c
 	mv datos_iniciales.txt datos_1.dat
 	./galaxia1 150000 200000 -100000 0
 	mv datos_iniciales.txt datos_2.dat
+
 	ipython notebook datos_iniciales_.ipynb &
+
 	cc todo1.c -lm -o evolucion
+	cc todo2.c -lm -o colision
 	./evolucion
-	cc todo2.c -lm -o colicion
-	./colicion
+
+
+	./colision
 clean:
 	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png *.dat evolucion
 

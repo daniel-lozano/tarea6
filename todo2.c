@@ -31,7 +31,7 @@ int main(){
   float X,Y,Vx,Vy,X1,Y1,Vx1,Vy1;
   int lineas=0;
   int lineas1=0;
-  int pasos=100000;
+  int pasos=50000;
   int dimensiones=3;
   int *numero;
   int i,j,k,indice;
@@ -129,8 +129,8 @@ int main(){
   Vx1=vx0[lineas];
   Vy1=vy0[lineas];
 
-  printf("posiciones galaxia 1 X=%f Y=%f\n posiciones  galaxia 2 X=%f Y=%f\n",X,Y,X1,Y1);
-  printf("velocidades galaxia 1 VX=%f VY=%f\n velocidades  galaxia 2 VX=%f VY=%f  \n",Vx,Vy,Vx1,Vy1);
+  printf("posiciones galaxia 1 X=%f Y=%f\nposiciones galaxia 2 X=%f Y=%f\n",X,Y,X1,Y1);
+  printf("velocidades galaxia 1 VX=%f VY=%f\nvelocidades galaxia 2 VX=%f VY=%f  \n",Vx,Vy,Vx1,Vy1);
  
  
   for(i=0;i<pasos;i++){
@@ -146,6 +146,9 @@ int main(){
      for(i=1;i<pasos;i++){
     //tiempo
 
+       if(i>=(pasos/3) && i<=(1+pasos/3)){
+	 printf("va por 1/3 del recorrido\n");
+       }
        for(j=0;j<lineas+lineas1;j++){	
 	 if(j!=0 && j!=lineas){	
 	 //masas
@@ -172,7 +175,7 @@ int main(){
 return 0;
 }
 
-//________________FUNCIONES______________________________________________-
+//________________FUNCIONES______________________________________________
 
 
 float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
