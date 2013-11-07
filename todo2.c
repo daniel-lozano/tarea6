@@ -1,4 +1,4 @@
-#include <stdlib.h>
+       #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -200,7 +200,7 @@ float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
 }
 
 float primex2(float x,float vxp,float tiempo,float y,float X,float Y,float X1,float Y1,int indice){
-  float G=4.499866*pow(10,-9);
+  float G=4.510*pow(10,-9);
   float M=pow(10,12);
   float a;
   if(indice==0){
@@ -223,7 +223,7 @@ float primey1(float y,float vyp,float tiempo,float x,float X,float Y){
 }
 
 float primey2(float y,float vyp,float tiempo,float x,float X,float Y,float X1,float Y1,int indice){
-  float G=4.499866*pow(10,-9);
+  float G=4.510*pow(10,-9);
   float M=pow(10,12);
   float a;
 

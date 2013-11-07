@@ -33,7 +33,8 @@ FILE *in;
   int dimensiones=5;
   int *numero;
   int i,j,k,indice;
-  float p=5000000/(pasos*5);
+  float p=0.0001;
+
 
  
   in=fopen("datos_1.dat","r");
@@ -43,10 +44,8 @@ FILE *in;
     exit(1);    
     }
 
- 
-  printf("contando numero de masas\n");
-  printf("pasos %d\n",pasos);
-  printf("dt= %f\n",p);
+  printf("pasos %d\n\n",pasos);
+  printf("dt= %f\n\n",p);
   //cuenta las lineas
 
   do{
@@ -111,8 +110,6 @@ FILE *in;
   Y=y0[0];
   Vx=vx0[0];
   Vy=vy0[0];
-  printf("posiciones X=%f Y=%f\n",X,Y);
-  printf("velocidades VX=%f VY=%f\n",Vx,Vy);
  
  
   for(i=0;i<pasos;i++){
@@ -136,21 +133,20 @@ FILE *in;
 	
 	
 	 x0[j]=solucion1[1];
-	 vx0[j]=solucion1[2];
-
-	 y0[j]=solucion1[3];
+	 y0[j]=solucion1[2];
+	 vx0[j]=solucion1[3];
 	 vy0[j]=solucion1[4];
        }
      }
 
      //-----------------------------------------------------------------
 
-     printf("%d \n",k+1);
+     printf("%d agnos\n",(k+1)*1000);
+
      for(i=0;i<121;i++){
 	    
        if(k==0){
 	 fprintf(evol1,"%d %f %f %f %f\n",i-1,x0[i],vx0[i],y0[i],vy0[i]);
-
 	
        }
        if(k==1){	 
@@ -185,7 +181,7 @@ float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
 }
 
 float primex2(float x,float vxp,float tiempo,float y,float X,float Y){
-  float G=4.03*pow(10,-3);
+  float G=4.460*pow(10,-6);
   float M=pow(10,12);
   float a =-G*M*(x-X)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
@@ -196,7 +192,7 @@ float primey1(float y,float vyp,float tiempo,float x,float X,float Y){
 }
 
 float primey2(float y,float vyp,float tiempo,float x,float X,float Y){
-  float G=4.03*pow(10,-3);
+  float G=4.460*pow(10,-6);
   float M=pow(10,12);
   float a =-G*M*(y-Y)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
@@ -287,14 +283,14 @@ float* runge1(float x,float vx,float y,float vy,float *tiempo,float paso,int i,f
   
   po1 = tiempo[i-1] + h;
   po2 = x + h*kpromx;
-  po3 = vx + h*lpromx;
-  po4 = y + h*kpromy;
+  po3 = y + h*kpromy;
+  po4 = vx + h*lpromx;
   po5 = vy + h*lpromy;
 
   solucion[0]=po1;
   solucion[1]=po2;
-  solucion[2]=po3;
-  solucion[3]=po4;
+  solucion[2]=po4;
+  solucion[3]=po3;
   solucion[4]=po5;
   return solucion; 
 }
