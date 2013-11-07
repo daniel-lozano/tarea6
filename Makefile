@@ -14,10 +14,8 @@ galaxia1:ic.c
 	cc todo1.c -lm -o evolucion
 	cc todo2.c -lm -o colision
 	./evolucion
-
-
 	./colision
 clean:
-	rm -f datos_iniciales.txt datos_iniciales_galaxia2.txt galaxias.png galaxia1 galaxia2 2galaxias.png *.dat evolucion colision
+	rm -f datos_iniciales.txt  galaxias.png galaxia1 galaxia2 2galaxias.png *.dat evolucion colision
 
 

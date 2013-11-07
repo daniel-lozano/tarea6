@@ -29,7 +29,7 @@ FILE *in;
   float *tiempo;
   float X,Y,Vx,Vy;
   int lineas=0;
-  int pasos=100000;
+  int pasos=10000;
   int dimensiones=5;
   int *numero;
   int i,j,k,indice;
@@ -185,7 +185,7 @@ float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
 }
 
 float primex2(float x,float vxp,float tiempo,float y,float X,float Y){
-  float G=4.46391*pow(10,-6);
+  float G=4.03*pow(10,-3);
   float M=pow(10,12);
   float a =-G*M*(x-X)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
@@ -196,8 +196,7 @@ float primey1(float y,float vyp,float tiempo,float x,float X,float Y){
 }
 
 float primey2(float y,float vyp,float tiempo,float x,float X,float Y){
-  float G=4.46391*pow(10,-6);
-  //=4.499866*pow(10,-9);
+  float G=4.03*pow(10,-3);
   float M=pow(10,12);
   float a =-G*M*(y-Y)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
