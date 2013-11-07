@@ -52,28 +52,28 @@ int main(int argc,char **argv){
     if(i>-1 && i<=11){//12
      
       angulo1=teta1*(12-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*sin(angulo1)+x,1*radio*cos(angulo1)+y,Vpx+velocidad*sin(angulo1),Vpy+velocidad*cos(angulo1));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo1)+x,1*radio*sin(angulo1)+y,Vpx+velocidad*sin(angulo1),Vpy+velocidad*cos(angulo1));
       //  fprintf(file,"%d\n",i);
     }
 
     if(i>11 && i<=29){//18
       angulo2=teta2*(29-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,2*radio*sin(angulo2)+x,2*radio*cos(angulo2)+y,Vpx+pow(1/2,1/2)*velocidad*sin(angulo2),Vpy+velocidad*pow(1/2,1/2)*cos(angulo2));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,2*radio*cos(angulo2)+x,2*radio*sin(angulo2)+y,Vpx+pow(1/2,1/2)*velocidad*sin(angulo2),Vpy+velocidad*pow(1/2,1/2)*cos(angulo2));
     }
 
     if(i>29 && i<=53){//24
       angulo3=teta3*(53-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,3*radio*sin(angulo3)+x,3*radio*cos(angulo3)+y,Vpx+velocidad*sin(angulo3)*pow(1/3,1/2),Vpy+velocidad*cos(angulo3)*pow(1/3,1/2));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,3*radio*cos(angulo3)+x,3*radio*sin(angulo3)+y,Vpx+velocidad*sin(angulo3)*pow(1/3,1/2),Vpy+velocidad*cos(angulo3)*pow(1/3,1/2));
     }
 
      if(i>53 && i<=83){//30
        angulo4=teta4*(83-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,4*radio*sin(angulo4)+x,4*radio*cos(angulo4)+y,Vpx+velocidad*sin(angulo4)*pow(1/4,1/2),Vpy+velocidad*cos(angulo4)*pow(1/4,1/2));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,4*radio*cos(angulo4)+x,4*radio*sin(angulo4)+y,Vpx+velocidad*sin(angulo4)*pow(1/4,1/2),Vpy+velocidad*cos(angulo4)*pow(1/4,1/2));
     }
 
      if(i>83 && i<=cuerpos-1){//36
        angulo5=teta5*(99-i);
-       fprintf(file,"%d %lf %lf %lf %lf \n",i,5*radio*sin(angulo5)+x,5*radio*cos(angulo5)+y,Vpx+velocidad*sin(angulo5)*pow(1/5,1/2),Vpy+velocidad*cos(angulo5)*pow(1/5,1/2));
+       fprintf(file,"%d %lf %lf %lf %lf \n",i,5*radio*cos(angulo5)+x,5*radio*sin(angulo5)+y,Vpx+velocidad*sin(angulo5)*pow(1/5,1/2),Vpy+velocidad*cos(angulo5)*pow(1/5,1/2));
     }  
 
 
