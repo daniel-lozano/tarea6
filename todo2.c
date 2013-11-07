@@ -35,7 +35,7 @@ int main(){
   int dimensiones=3;
   int *numero;
   int i,j,k,indice;
-  float p=5000000/pasos;
+  float p=5/pasos;
   float a ;
 
  
@@ -223,7 +223,7 @@ float primey1(float y,float vyp,float tiempo,float x,float X,float Y){
 }
 
 float primey2(float y,float vyp,float tiempo,float x,float X,float Y,float X1,float Y1,int indice){
-  float G=4.510*pow(10,-9);
+  float G=4.460*pow(10,-6);
   float M=pow(10,12);
   float a;
 

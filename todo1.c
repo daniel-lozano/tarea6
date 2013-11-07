@@ -183,7 +183,7 @@ float primex1(float x,float vxp,float tiempo,float y,float X,float Y){
 float primex2(float x,float vxp,float tiempo,float y,float X,float Y){
   float G=4.460*pow(10,-6);
   float M=pow(10,12);
-  float a =-G*M*(x-X)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
+  float a =G*M*(x-X)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
 }
 
@@ -194,7 +194,7 @@ float primey1(float y,float vyp,float tiempo,float x,float X,float Y){
 float primey2(float y,float vyp,float tiempo,float x,float X,float Y){
   float G=4.460*pow(10,-6);
   float M=pow(10,12);
-  float a =-G*M*(y-Y)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
+  float a =G*M*(y-Y)*pow(pow(x-X,2)+pow(y-Y,2),-3/2);
   return a;
 }
 

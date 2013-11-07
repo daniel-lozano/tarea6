@@ -54,7 +54,7 @@ int main(int argc,char **argv){
       radio=10.0*1;
       velocidad=pow(masa*G/radio,1/2);
       angulo1=teta1*(12-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo1)+x,radio*sin(angulo1)+y,Vpx+velocidad*sin(angulo1),Vpy+velocidad*cos(angulo1));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo1)+x,radio*sin(angulo1)+y,Vpx-velocidad*sin(angulo1),Vpy+velocidad*cos(angulo1));
       //  fprintf(file,"%d\n",i);
     }
 
@@ -62,21 +62,21 @@ int main(int argc,char **argv){
       radio=10.0*2;
       velocidad=pow(masa*G/radio,1/2);
       angulo2=teta2*(29-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo2)+x,radio*sin(angulo2)+y,Vpx+velocidad*sin(angulo2),Vpy+velocidad*cos(angulo2));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo2)+x,radio*sin(angulo2)+y,Vpx-velocidad*sin(angulo2),Vpy+velocidad*cos(angulo2));
     }
 
     if(i>29 && i<=53){//24
       radio=10.0*3;
       velocidad=pow(masa*G/radio,1/2);
       angulo3=teta3*(53-i);
-      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo3)+x,radio*sin(angulo3)+y,Vpx+velocidad*sin(angulo3),Vpy+velocidad*cos(angulo3));
+      fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo3)+x,radio*sin(angulo3)+y,Vpx-velocidad*sin(angulo3),Vpy+velocidad*cos(angulo3));
     }
 
      if(i>53 && i<=83){//30
       radio=10.0*4;
       velocidad=pow(masa*G/radio,1/2);
        angulo4=teta4*(83-i);
-       fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo4)+x,radio*sin(angulo4)+y,Vpx+velocidad*sin(angulo4),Vpy+velocidad*cos(angulo4));
+       fprintf(file,"%d %lf %lf %lf %lf\n",i,radio*cos(angulo4)+x,radio*sin(angulo4)+y,Vpx-velocidad*sin(angulo4),Vpy+velocidad*cos(angulo4));
     }
 
      if(i>83 && i<=cuerpos-1){//36
@@ -84,7 +84,7 @@ int main(int argc,char **argv){
 
       velocidad=pow(masa*G/radio,1/2);
       angulo5=teta5*(120-i);
-      fprintf(file,"%d %lf %lf %lf %lf \n",i,radio*cos(angulo5)+x,radio*sin(angulo5)+y,Vpx+velocidad*sin(angulo5),Vpy+velocidad*cos(angulo5));
+      fprintf(file,"%d %lf %lf %lf %lf \n",i,radio*cos(angulo5)+x,radio*sin(angulo5)+y,Vpx-velocidad*sin(angulo5),Vpy+velocidad*cos(angulo5));
     }  
 
 
