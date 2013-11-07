@@ -29,11 +29,11 @@ FILE *in;
   float *tiempo;
   float X,Y,Vx,Vy;
   int lineas=0;
-  int pasos=10000;
+  int pasos=100000;
   int dimensiones=5;
   int *numero;
   int i,j,k,indice;
-  float p=0.0001;
+  float p=(5000000)/pasos;
 
 
  

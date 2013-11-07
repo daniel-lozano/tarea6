@@ -31,13 +31,14 @@ int main(){
   float X,Y,Vx,Vy,X1,Y1,Vx1,Vy1;
   int lineas=0;
   int lineas1=0;
-  int pasos=100000;
+  float pasos=100000.0;
   int dimensiones=3;
   int *numero;
   int i,j,k,indice;
-  float p=5/pasos;
+  float p=(5000000.0/pasos);
   float a ;
 
+  printf("%lf\n",p);
  
   in=fopen("datos_1.dat","r");
   on=fopen("datos_2.dat","r");
@@ -52,7 +53,7 @@ int main(){
     }
  
   printf("contando numero de masas\n");
-  printf("pasos %d\n",pasos);
+  printf("pasos %lf\n",pasos);
   printf("dt= %f\n",p);
   //cuenta las lineas
 
